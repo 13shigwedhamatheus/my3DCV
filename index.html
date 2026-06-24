@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matheus Shigwedha | Interactive 3D Portfolio</title>
-    <!-- Font Awesome for Section Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -35,17 +34,19 @@
             width: 100%;
             height: 100%;
             z-index: 10;
-            pointer-events: none;
+            pointer-events: none; /* Allows mouse/touch events to bleed down into the 3D scene */
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             padding: 2rem;
         }
+        
+        /* Interactive UI block configuration overrides */
         header, footer, .info-panel, .controls-hint {
-            pointer-events: auto;
+            pointer-events: auto; /* Reactivates mouse inputs on top of UI components */
         }
         
-        /* Header Customization */
+        /* Header Container Matrix */
         header {
             display: flex;
             justify-content: space-between;
@@ -54,7 +55,9 @@
             padding: 1.5rem;
             border-radius: 12px;
             backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255,255,255,0.05);
+            width: 100%;
         }
         .brand h1 {
             font-size: 1.3rem;
@@ -70,7 +73,7 @@
         }
         .contact-chips {
             display: flex;
-            gap: 1rem;
+            gap: 0.75rem;
             flex-wrap: wrap;
             max-width: 60%;
             justify-content: flex-end;
@@ -87,6 +90,7 @@
             border: 1px solid rgba(255,255,255,0.08);
             text-decoration: none;
             transition: all 0.3s;
+            white-space: nowrap;
         }
         .chip:hover {
             background: rgba(0, 242, 254, 0.15);
@@ -94,13 +98,14 @@
             border-color: #00f2fe;
         }
 
-        /* Central Layout Matrix */
+        /* Central Layout Structural Layer */
         .main-content-area {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 70%;
+            height: 65%;
             width: 100%;
+            pointer-events: none;
         }
 
         /* CV Dynamic Display Panel */
@@ -110,9 +115,10 @@
             padding: 2rem;
             border-radius: 16px;
             width: 420px;
-            max-height: 80vh;
+            max-height: 100%;
             overflow-y: auto;
             backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             box-shadow: 0 20px 50px rgba(0,0,0,0.6);
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -125,7 +131,7 @@
         }
         .panel-section-title {
             color: #00f2fe;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             margin-bottom: 1rem;
             display: flex;
             align-items: center;
@@ -175,14 +181,15 @@
             border: 1px solid rgba(79, 172, 254, 0.2);
         }
 
-        /* Navigation Node Instructions */
+        /* Navigation HUD Controls Hint Panel */
         .controls-hint {
             background: rgba(10, 11, 16, 0.7);
-            padding: 1rem;
+            padding: 1.2rem;
             border-radius: 10px;
             border: 1px solid rgba(255,255,255,0.05);
-            max-width: 250px;
+            max-width: 260px;
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
         .controls-hint h4 {
             font-size: 0.8rem;
@@ -194,13 +201,13 @@
             font-size: 0.75rem;
             color: #a0aec0;
             line-height: 1.4;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.6rem;
         }
         .node-legend {
             font-size: 0.7rem;
             display: flex;
             flex-direction: column;
-            gap: 0.3rem;
+            gap: 0.35rem;
         }
         .legend-key {
             display: flex;
@@ -211,6 +218,7 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
+            flex-shrink: 0;
         }
 
         footer {
@@ -220,6 +228,86 @@
             color: #a0aec0;
             border-top: 1px solid rgba(255,255,255,0.05);
             padding-top: 1rem;
+            width: 100%;
+        }
+
+        /* --- STAGE MATRICES MEDIA QUERY DECLARATIONS --- */
+        
+        /* Tablets and Large Mobile Displays (Landscape/Portrait) */
+        @media (max-width: 992px) {
+            .ui-layer {
+                padding: 1.25rem;
+            }
+            .info-panel {
+                width: 340px;
+                padding: 1.25rem;
+            }
+            .contact-chips {
+                max-width: 50%;
+            }
+        }
+
+        /* Handheld Smart Devices (768px and below) */
+        @media (max-width: 768px) {
+            .ui-layer {
+                padding: 1rem;
+                overflow-y: auto; /* Fallback support for miniature landscape screens */
+            }
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+                padding: 1rem;
+            }
+            .contact-chips {
+                max-width: 100%;
+                justify-content: flex-start;
+            }
+            .main-content-area {
+                flex-direction: column-reverse;
+                height: auto;
+                align-items: stretch;
+                margin: 1rem 0;
+                gap: 1rem;
+            }
+            .info-panel {
+                width: 100%;
+                max-height: 42vh; /* Throttles panel heights to keep the 3D canvas interactive */
+            }
+            .controls-hint {
+                max-width: 100%;
+                width: 100%;
+                padding: 0.8rem;
+            }
+            .node-legend {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 0.75rem;
+            }
+            footer {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.4rem;
+                text-align: center;
+                padding-top: 0.75rem;
+            }
+        }
+
+        /* Ultra-Compact Screens (480px and below) */
+        @media (max-width: 480px) {
+            .brand h1 {
+                font-size: 1.1rem;
+            }
+            .brand p {
+                font-size: 0.75rem;
+            }
+            .info-panel {
+                max-height: 48vh;
+                padding: 1rem;
+            }
+            .controls-hint {
+                display: none; /* Hides system legend parameters to save crucial pixel bounds on small viewports */
+            }
         }
 
         /* Engine Preloader Shield */
@@ -250,7 +338,6 @@
             100% { transform: rotate(360deg); }
         }
     </style>
-    <!-- Import Map Module Fixation for Three.js Engine Components -->
     <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
     <script type="importmap">
       {
@@ -274,7 +361,7 @@
         <header>
             <div class="brand">
                 <h1>Matheus Elago E. Shigwedha</h1>
-                <p><i class="fa-solid fa-code text-cyan"></i> Computer Science Lecturer & Web/Software Developer</p>
+                <p><i class="fa-solid fa-code text-cyan"></i> Computer Science Lecturer & Web/Software Engineer</p>
             </div>
             <div class="contact-chips">
                 <a href="mailto:shigwedhamatheus13@gmail.com" class="chip"><i class="fa-solid fa-envelope"></i> shigwedhamatheus13@gmail.com</a>
@@ -285,7 +372,6 @@
         </header>
 
         <div class="main-content-area">
-            <!-- Dynamic data output terminal targeted via raycaster queries -->
             <div class="info-panel" id="dynamic-hud">
                 <div class="panel-section-title">
                     <i class="fa-solid fa-user-astronaut"></i> Executive Summary
@@ -294,16 +380,15 @@
                     <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.6;">
                         Highly dedicated and enthusiastic professional holding a Bachelor of Education (Honors) in Computer Science and Agricultural Science. Proven expertise facilitating advanced technical training matrices as a Computer Science Lecturer, with rigorous infrastructure backgrounds across Software Engineering, System Troubleshooting, Network administration, and IoT solutions.
                     </p>
-                    <p style="color: #00f2fe; margin-top: 1rem; font-size: 0.75rem; font-family: monospace; animation: pulse 2s infinite;">
-                        <i class="fa-solid fa-hand-pointer"></i> Click any floating 3D matrix node to parse sub-system records.
+                    <p style="color: #00f2fe; margin-top: 1rem; font-size: 0.75rem; font-family: monospace; opacity: 0.85;">
+                        <i class="fa-solid fa-hand-pointer"></i> Tap or click any floating 3D matrix node to parse sub-system records.
                     </p>
                 </div>
             </div>
 
-            <!-- Interactivity System Rig Legend Details -->
             <div class="controls-hint">
                 <h4><i class="fa-solid fa-network-wired"></i> Navigation Rig</h4>
-                <p>Drag mouse to orbit workspace. Scroll to scale viewpoint array.</p>
+                <p>Drag to orbit model workspace. Pinch/Scroll to scale viewport array.</p>
                 <div class="node-legend">
                     <div class="legend-key"><span class="legend-dot" style="background:#00f2fe;"></span> <span>Central Base Profile</span></div>
                     <div class="legend-key"><span class="legend-dot" style="background:#4facfe;"></span> <span>Academic & Industry Roles</span></div>
@@ -314,6 +399,7 @@
         </div>
 
         <footer>
+            <p><i class="fa-solid fa-atom"></i> Engine Variant: Three.js WebGL Web Node</p>
             <p>&copy; 2026 M.E.E. Shigwedha. All Rights Reserved.</p>
         </footer>
     </div>
@@ -435,7 +521,7 @@
             renderer.shadowMap.type = THREE.PCFSoftShadowMap;
             container.appendChild(renderer.domElement);
 
-            // Navigation Matrix Setup
+            // Navigation Matrix Setup (Supports multi-touch gestures on mobile models)
             controls = new OrbitControls(camera, renderer.domElement);
             controls.enableDamping = true;
             controls.dampingFactor = 0.05;
@@ -463,12 +549,20 @@
             // Render Structural Geometry Arrays
             compileWorldGeometry();
 
-            // Interactivity Binding Logic Pipelines
+            // Interactivity Binding Logic Pipelines (Mapped to cross-platform triggers)
             raycaster = new THREE.Raycaster();
             mouse = new THREE.Vector2();
 
             window.addEventListener('mousemove', handlePointerMovement);
             window.addEventListener('click', handleNodeSelection);
+            
+            // Native mobile touch start listener fallback for fast interaction validation
+            window.addEventListener('touchstart', (e) => {
+                if(e.touches.length > 0) {
+                    updateMouseCoordinates(e.touches[0].clientX, e.touches[0].clientY);
+                }
+            }, { passive: true });
+            
             window.addEventListener('resize', handleViewportRescale);
 
             // Clear Preloader Screen Elements
@@ -495,7 +589,7 @@
 
             // Node 1: Core Base Hub (Center Node)
             const hubGeo = new THREE.BoxGeometry(1.6, 1.6, 1.6);
-            const hubMat = new THREE.MeshStandardMaterial({ color: 0x00f2fe, roughness: 0.2, metalness: 0.8, wireframe: false });
+            const hubMat = new THREE.MeshStandardMaterial({ color: 0x00f2fe, roughness: 0.2, metalness: 0.8 });
             const centralHub = new THREE.Mesh(hubGeo, hubMat);
             centralHub.position.set(0, 1, 0);
             centralHub.castShadow = true;
@@ -534,9 +628,13 @@
             raycastTrackedObjects.push(skillNode);
         }
 
+        function updateMouseCoordinates(clientX, clientY) {
+            mouse.x = (clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(clientY / window.innerHeight) * 2 + 1;
+        }
+
         function handlePointerMovement(event) {
-            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            updateMouseCoordinates(event.clientX, event.clientY);
 
             raycaster.setFromCamera(mouse, camera);
             const collisionMatches = raycaster.intersectObjects(raycastTrackedObjects);
@@ -562,6 +660,11 @@
                     const initialHexColor = targetNode.material.color.getHex();
                     targetNode.material.color.setHex(0xffffff);
                     setTimeout(() => { targetNode.material.color.setHex(initialHexColor); }, 150);
+                    
+                    // Smoothly auto-scrolls the HUD display open on smaller phone screens
+                    if(window.innerWidth <= 768) {
+                        hudTerminal.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }
                 }
             }
         }

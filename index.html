@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matheus Shigwedha | Interactive 3D Portfolio</title>
+    <title>Matheus Shigwedha | Interactive 3D Portfolio Matrix</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -34,7 +34,7 @@
             width: 100%;
             height: 100%;
             z-index: 10;
-            pointer-events: none; /* Allows mouse/touch events to bleed down into the 3D scene */
+            pointer-events: none; /* Allows mouse/touch events to bleed down into 3D space */
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -42,7 +42,7 @@
         }
         
         /* Interactive UI block configuration overrides */
-        header, footer, .info-panel, .controls-hint {
+        header, footer, .info-panel, .controls-hint, .nav-links a, .menu-toggle {
             pointer-events: auto; /* Reactivates mouse inputs on top of UI components */
         }
         
@@ -50,52 +50,62 @@
         header {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
-            background: rgba(10, 11, 16, 0.6);
-            padding: 1.5rem;
+            align-items: center;
+            background: rgba(10, 11, 16, 0.75);
+            padding: 1.2rem 2rem;
             border-radius: 12px;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255,255,255,0.05);
             width: 100%;
+            position: relative;
+            z-index: 20;
         }
         .brand h1 {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 800;
             letter-spacing: 2px;
             color: #00f2fe;
             text-transform: uppercase;
         }
         .brand p {
-            font-size: 0.8rem;
-            color: #a0aec0;
-            margin-top: 0.2rem;
-        }
-        .contact-chips {
-            display: flex;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-            max-width: 60%;
-            justify-content: flex-end;
-        }
-        .chip {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 0.4rem 0.8rem;
-            border-radius: 20px;
             font-size: 0.75rem;
-            color: #cbd5e1;
+            color: #a0aec0;
+            margin-top: 0.1rem;
+        }
+
+        /* Desktop Navigation System */
+        .nav-container {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            border: 1px solid rgba(255,255,255,0.08);
-            text-decoration: none;
-            transition: all 0.3s;
-            white-space: nowrap;
+            gap: 2rem;
         }
-        .chip:hover {
-            background: rgba(0, 242, 254, 0.15);
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .nav-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+        .nav-links a:hover {
             color: #00f2fe;
-            border-color: #00f2fe;
+        }
+
+        /* Mobile Hamburger Menu Trigger */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #00f2fe;
+            font-size: 1.4rem;
+            cursor: pointer;
         }
 
         /* Central Layout Structural Layer */
@@ -103,22 +113,22 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 65%;
+            height: 68%;
             width: 100%;
             pointer-events: none;
         }
 
         /* CV Dynamic Display Panel */
         .info-panel {
-            background: rgba(10, 11, 16, 0.85);
+            background: rgba(10, 11, 16, 0.88);
             border: 1px solid rgba(0, 242, 254, 0.2);
             padding: 2rem;
             border-radius: 16px;
-            width: 420px;
+            width: 450px;
             max-height: 100%;
             overflow-y: auto;
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             box-shadow: 0 20px 50px rgba(0,0,0,0.6);
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -176,9 +186,112 @@
             color: #4facfe;
             padding: 0.2rem 0.6rem;
             border-radius: 4px;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             margin: 0.2rem;
             border: 1px solid rgba(79, 172, 254, 0.2);
+        }
+
+        /* Embedded Dynamic Form Parameters */
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+        .form-group label {
+            font-size: 0.78rem;
+            color: #cbd5e1;
+            letter-spacing: 0.5px;
+        }
+        .form-control {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            padding: 0.6rem;
+            color: #ffffff;
+            font-size: 0.85rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .form-control:focus {
+            border-color: #00f2fe;
+            background: rgba(255, 255, 255, 0.07);
+        }
+        .submit-btn {
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            border: none;
+            border-radius: 6px;
+            padding: 0.7rem;
+            color: #0a0b10;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 0.5rem;
+        }
+        .submit-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(0, 242, 254, 0.3);
+        }
+
+        /* Project Display Architecture Cards */
+        .project-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .project-card h4 {
+            color: #ffffff;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .project-card .stack {
+            font-size: 0.7rem;
+            font-family: monospace;
+            color: #00f2fe;
+            margin-top: 0.2rem;
+        }
+        .project-card p {
+            font-size: 0.78rem;
+            color: #cbd5e1;
+            margin: 0.5rem 0;
+            line-height: 1.4;
+        }
+        .project-links {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+        }
+        .project-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #cbd5e1;
+            padding: 0.3rem 0.6rem;
+            font-size: 0.7rem;
+            border-radius: 4px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: all 0.2s;
+        }
+        .project-btn:hover {
+            background: rgba(0, 242, 254, 0.1);
+            color: #00f2fe;
+            border-color: #00f2fe;
         }
 
         /* Navigation HUD Controls Hint Panel */
@@ -231,37 +344,42 @@
             width: 100%;
         }
 
-        /* --- STAGE MATRICES MEDIA QUERY DECLARATIONS --- */
+        /* --- STAGE MATRICES RESPONSIVE INTERFACES --- */
         
-        /* Tablets and Large Mobile Displays (Landscape/Portrait) */
         @media (max-width: 992px) {
-            .ui-layer {
-                padding: 1.25rem;
-            }
-            .info-panel {
-                width: 340px;
-                padding: 1.25rem;
-            }
-            .contact-chips {
-                max-width: 50%;
-            }
+            .ui-layer { padding: 1.25rem; }
+            .info-panel { width: 360px; padding: 1.25rem; }
         }
 
         /* Handheld Smart Devices (768px and below) */
         @media (max-width: 768px) {
             .ui-layer {
                 padding: 1rem;
-                overflow-y: auto; /* Fallback support for miniature landscape screens */
+                overflow-y: auto;
             }
             header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
                 padding: 1rem;
+                border-radius: 8px;
             }
-            .contact-chips {
-                max-width: 100%;
-                justify-content: flex-start;
+            .menu-toggle {
+                display: block; /* Activate hamburger button structure */
+            }
+            .nav-links {
+                display: none; /* Collapsed state container configuration */
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(10, 11, 16, 0.95);
+                border: 1px solid rgba(255,255,255,0.08);
+                border-top: none;
+                padding: 1rem;
+                gap: 1rem;
+                border-radius: 0 0 8px 8px;
+            }
+            .nav-links.active {
+                display: flex; /* Dynamic expansion target via JS interaction triggers */
             }
             .main-content-area {
                 flex-direction: column-reverse;
@@ -272,7 +390,7 @@
             }
             .info-panel {
                 width: 100%;
-                max-height: 42vh; /* Throttles panel heights to keep the 3D canvas interactive */
+                max-height: 46vh; /* Keeps WebGL viewport accessible for drag actions */
             }
             .controls-hint {
                 max-width: 100%;
@@ -293,50 +411,29 @@
             }
         }
 
-        /* Ultra-Compact Screens (480px and below) */
         @media (max-width: 480px) {
-            .brand h1 {
-                font-size: 1.1rem;
-            }
-            .brand p {
-                font-size: 0.75rem;
-            }
-            .info-panel {
-                max-height: 48vh;
-                padding: 1rem;
-            }
-            .controls-hint {
-                display: none; /* Hides system legend parameters to save crucial pixel bounds on small viewports */
-            }
+            .brand h1 { font-size: 1.05rem; }
+            .info-panel { max-height: 50vh; padding: 1rem; }
+            .controls-hint { display: none; } /* Clear screen bounds on micro viewports */
         }
 
         /* Engine Preloader Shield */
         #loader {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background-color: #0a0b10;
             z-index: 100;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
+            display: flex; justify-content: center; align-items: center; flex-direction: column;
             transition: opacity 0.6s ease;
         }
         .spinner {
-            width: 50px;
-            height: 50px;
+            width: 50px; height: 50px;
             border: 3px solid rgba(0, 242, 254, 0.1);
             border-top: 3px solid #00f2fe;
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
     <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
     <script type="importmap">
@@ -352,7 +449,7 @@
 
     <div id="loader">
         <div class="spinner"></div>
-        <p style="margin-top: 1.5rem; color: #00f2fe; font-family: monospace; font-size: 0.8rem; letter-spacing: 3px;">COMPILING VIRTUAL CV MATRIX...</p>
+        <p style="margin-top: 1.5rem; color: #00f2fe; font-family: monospace; font-size: 0.8rem; letter-spacing: 3px;">INITIALIZING CORE MATRIX APPARATUS...</p>
     </div>
 
     <div id="canvas-container"></div>
@@ -361,13 +458,20 @@
         <header>
             <div class="brand">
                 <h1>Matheus Elago E. Shigwedha</h1>
-                <p><i class="fa-solid fa-code text-cyan"></i> Computer Science Lecturer & Web/Software Developer</p>
+                <p><i class="fa-solid fa-code text-cyan"></i> Lecturer & Full-Stack Systems Engineer</p>
             </div>
-            <div class="contact-chips">
-                <a href="mailto:shigwedhamatheus13@gmail.com" class="chip"><i class="fa-solid fa-envelope"></i> shigwedhamatheus13@gmail.com</a>
-                <span class="chip"><i class="fa-solid fa-phone"></i> +264 81 844 3473</span>
-                <span class="chip"><i class="fa-solid fa-location-dot"></i> Ongwediva, Namibia</span>
-                <a href="https://github.com/13shigwedhamatheus" target="_blank" class="chip"><i class="fa-brands fa-github"></i> GitHub</a>
+            <div class="nav-container">
+                <nav class="nav-links" id="menu-links">
+                    <a onclick="routeToSection('summary')">Profile</a>
+                    <a onclick="routeToSection('projects')">Projects</a>
+                    <a onclick="routeToSection('experience')">Experience</a>
+                    <a onclick="routeToSection('education')">Education</a>
+                    <a onclick="routeToSection('skills')">Skills</a>
+                    <a onclick="routeToSection('contact')">Contact</a>
+                </nav>
+                <button class="menu-toggle" id="menu-btn" aria-label="Toggle Menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
             </div>
         </header>
 
@@ -378,10 +482,10 @@
                 </div>
                 <div class="cv-item">
                     <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.6;">
-                        Highly dedicated and enthusiastic professional holding a Bachelor of Education (Honors) in Computer Science and Agricultural Science. Proven expertise facilitating advanced technical training matrices as a Computer Science Lecturer, with rigorous infrastructure backgrounds across Software Engineering, System Troubleshooting, Network administration, and IoT solutions.
+                        Highly dedicated and enthusiastic professional holding a Bachelor of Education (Honors) in Computer Science and Agricultural Science[cite: 5]. Proven expertise facilitating advanced technical training matrices as a Computer Science Lecturer [cite: 6], with rigorous infrastructure backgrounds across Software Engineering, System Troubleshooting, Network administration, and IoT solutions[cite: 7].
                     </p>
                     <p style="color: #00f2fe; margin-top: 1rem; font-size: 0.75rem; font-family: monospace; opacity: 0.85;">
-                        <i class="fa-solid fa-hand-pointer"></i> Tap or click any floating 3D matrix node to parse sub-system records.
+                        <i class="fa-solid fa-hand-pointer"></i> Select from the Menu or click floating 3D matrix nodes to scan real-time architecture data streams.
                     </p>
                 </div>
             </div>
@@ -391,15 +495,18 @@
                 <p>Drag to orbit model workspace. Pinch/Scroll to scale viewport array.</p>
                 <div class="node-legend">
                     <div class="legend-key"><span class="legend-dot" style="background:#00f2fe;"></span> <span>Central Base Profile</span></div>
+                    <div class="legend-key"><span class="legend-dot" style="background:#ffb703;"></span> <span>Software Engineering Projects</span></div>
                     <div class="legend-key"><span class="legend-dot" style="background:#4facfe;"></span> <span>Academic & Industry Roles</span></div>
-                    <div class="legend-key"><span class="legend-dot" style="background:#9b51e0;"></span> <span>Engineering Credentials</span></div>
+                    <div class="legend-key"><span class="legend-dot" style="background:#9b51e0;"></span> <span>Academic Credentials Array</span></div>
                     <div class="legend-key"><span class="legend-dot" style="background:#00ff87;"></span> <span>Technical Skills Inventory</span></div>
+                    <div class="legend-key"><span class="legend-dot" style="background:#ff5722;"></span> <span>Live Telemetry Channel</span></div>
                 </div>
             </div>
         </div>
 
         <footer>
-             <p>&copy; 2026 M.E.E. Shigwedha. All Rights Reserved.</p>
+            <p><i class="fa-solid fa-atom"></i> Engine Variant: Three.js WebGL Core</p>
+            <p>&copy; 2026 M.E.E. Shigwedha. All Rights Reserved.</p>
         </footer>
     </div>
 
@@ -408,15 +515,83 @@
         import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
         // --- Data Matrices Extracted directly from User Dossier ---
-        const CV_DATA = {
+        window.CV_DATA = {
             summary: `
                 <div class="panel-section-title"><i class="fa-solid fa-user"></i> Core Profile</div>
                 <div class="cv-item">
                     <h3>Matheus Elago Etegameno Shigwedha</h3>
                     <h4 style="margin-top:0.3rem;">CS & Agri-Science Professional</h4>
                     <p style="font-size:0.85rem; color:#cbd5e1; line-height:1.5; margin-top:0.5rem;">
-                        A highly analytical hybrid technologist and academic lecturer bridging the domains of advanced digital architecture, computer networks, and structural agricultural methodologies. Experienced in modern pedagogy frameworks, network troubleshooting, and cross-platform software development.
+                        A highly analytical hybrid technologist and academic lecturer bridging the domains of advanced digital architecture, computer networks, and structural agricultural methodologies[cite: 5, 7]. Experienced in modern pedagogy frameworks, network troubleshooting, and cross-platform software development[cite: 6, 7].
                     </p>
+                </div>
+            `,
+            projects: `
+                <div class="panel-section-title"><i class="fa-solid fa-laptop-code"></i> Engineering Software Inventory</div>
+                
+                <div class="project-card">
+                    <h4>AI-Powered Task Manager <span class="skill-tag" style="margin:0;">Dev</span></h4>
+                    <div class="stack">PYTHON & MONGODB</div>
+                    <p>A smart task management application that uses AI models to evaluate priority tasks and output optimal timeline schedules.</p>
+                    <div class="project-links"><span class="project-btn"><i class="fa-solid fa-hourglass-half"></i> In Development</span></div>
+                </div>
+
+                <div class="project-card">
+                    <h4>Inventory Management System</h4>
+                    <div class="stack">VB.NET, SQL, MYSQL</div>
+                    <p>A high-performance retail system desktop platform built to manage product catalogs, logging parameters, and transactions.</p>
+                    <div class="project-links">
+                        <span class="project-btn"><i class="fa-brands fa-github"></i> Repository Secure</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <h4>The Hubble</h4>
+                    <div class="stack">FLUTTER & FIREBASE</div>
+                    <p>Cross-platform mobile application architecture managing distributed global data links.</p>
+                    <div class="project-links">
+                        <a href="https://github.com/13shigwedhamatheus/LocalFix.git" target="_blank" class="project-btn"><i class="fa-brands fa-github"></i> Source</a>
+                        <a href="https://13shigwedhamatheus.github.io/LocalFix/" target="_blank" class="project-btn"><i class="fa-solid fa-bolt"></i> Live Demo</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <h4>Nyomba Trading CC</h4>
+                    <div class="stack">HTML5, CSS3, JAVASCRIPT</div>
+                    <p>Official highly responsive, high-performance web presentation portal built for enterprise commercial utility.</p>
+                    <div class="project-links">
+                        <a href="https://github.com/13shigwedhamatheus/Nyombatradingcc.git" target="_blank" class="project-btn"><i class="fa-brands fa-github"></i> Source</a>
+                        <a href="https://13shigwedhamatheus.github.io/Nyombatradingcc/" target="_blank" class="project-btn"><i class="fa-solid fa-bolt"></i> Live Demo</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <h4>Simple Pomodoro Timer</h4>
+                    <div class="stack">FLUTTER & FIREBASE</div>
+                    <p>A clean time management framework cross-compiled to mobile targets utilizing asynchronous reactive event structures.</p>
+                    <div class="project-links">
+                        <a href="https://github.com/13shigwedhamatheus/flutter_application.git" target="_blank" class="project-btn"><i class="fa-brands fa-github"></i> Code Matrix</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <h4>H&P Farming Enterprise</h4>
+                    <div class="stack">HTML5, CSS3, JAVASCRIPT</div>
+                    <p>Official web architecture tracking agricultural operations and digital visibility workflows for clients.</p>
+                    <div class="project-links">
+                        <a href="https://github.com/13shigwedhamatheus/h-pfarming.git" target="_blank" class="project-btn"><i class="fa-brands fa-github"></i> Source</a>
+                        <a href="https://13shigwedhamatheus.github.io/h-pfarming/" target="_blank" class="project-btn"><i class="fa-solid fa-bolt"></i> Live Demo</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <h4>Python Pixel-Palace</h4>
+                    <div class="stack">PYTHON & PYGAME</div>
+                    <p>A crisp, structural 2D interactive entertainment array manipulating continuous coordinate loop matrices.</p>
+                    <div class="project-links">
+                        <a href="https://github.com/13shigwedhamatheus/pixel-palace.git" target="_blank" class="project-btn"><i class="fa-brands fa-github"></i> Source</a>
+                        <a href="https://13shigwedhamatheus.github.io/pixel-palace/" target="_blank" class="project-btn"><i class="fa-solid fa-bolt"></i> Live Demo</a>
+                    </div>
                 </div>
             `,
             experience: `
@@ -424,27 +599,27 @@
                 <div class="cv-item">
                     <h3>Basic Computer Skills Lecturer</h3>
                     <h4>Tulipohamba Training & Assessment Institute</h4>
-                    <span class="date"><i class="fa-solid fa-calendar-days"></i> March 2026 - Present</span>
+                    <span class="date"><i class="fa-solid fa-calendar-days"></i> March 2026 - Present [cite: 38]</span>
                     <ul>
-                        <li>Deliver foundational and advanced ICT modules, covering system mechanics and business utility platforms.</li>
-                        <li>Formulate customized learning plans via differentiated instruction paths targeting disparate student cognitive cohorts.</li>
-                        <li>Design and benchmark certified examination rubrics mapped to NQF standard directives.</li>
+                        <li>Deliver foundational and advanced ICT modules, covering system mechanics and business utility platforms[cite: 39].</li>
+                        <li>Formulate customized learning plans via differentiated instruction paths targeting disparate student cognitive cohorts[cite: 40].</li>
+                        <li>Design and benchmark certified examination rubrics mapped to NQF standard directives[cite: 41, 42].</li>
                     </ul>
                 </div>
                 <div class="cv-item">
                     <h3>Technical Trainer & Instructional Support</h3>
                     <h4>International University of Management (IUM)</h4>
-                    <span class="date"><i class="fa-solid fa-calendar-days"></i> June 2025 - Dec 2025</span>
+                    <span class="date"><i class="fa-solid fa-calendar-days"></i> June 2025 - Dec 2025 [cite: 31]</span>
                     <ul>
-                        <li>Facilitated specialized logic training loops spanning Object-Oriented programming languages, operational routing databases, and business intelligence systems.</li>
+                        <li>Facilitated specialized logic training loops spanning Object-Oriented programming languages, operational routing databases, and business intelligence systems[cite: 36].</li>
                     </ul>
                 </div>
                 <div class="cv-item">
                     <h3>Web & Software Developer Freelancer</h3>
                     <h4>Self-Employed / Independent</h4>
-                    <span class="date"><i class="fa-solid fa-calendar-days"></i> May 2023 - Present</span>
+                    <span class="date"><i class="fa-solid fa-calendar-days"></i> May 2023 - Present [cite: 26]</span>
                     <ul>
-                        <li>Architected custom digital products, managed deployment pipelines, and built high-performance responsive interfaces for multi-sector clients.</li>
+                        <li>Architected custom digital products, managed deployment pipelines, and built high-performance responsive interfaces for multi-sector clients[cite: 28].</li>
                     </ul>
                 </div>
             `,
@@ -458,19 +633,19 @@
                 <div class="cv-item">
                     <h3>B.Ed Secondary Education (Honors)</h3>
                     <h4>Computer Science & Agricultural Science</h4>
-                    <p style="font-size:0.8rem; color:#a0aec0;">International University of Management | 2022 - 2025</p>
+                    <p style="font-size:0.8rem; color:#a0aec0;">International University of Management | 2022 - 2025 [cite: 46]</p>
                 </div>
                 <div class="cv-item">
                     <h3>Core Micro-Credentials</h3>
                     <div style="margin-top:0.5rem;">
-                        <span class="skill-tag">Google IT Automation (Python)</span>
-                        <span class="skill-tag">CompTIA Network+ (Infosec)</span>
-                        <span class="skill-tag">Cisco Network Support & Security</span>
-                        <span class="skill-tag">Generative AI Fundamentals (Databricks)</span>
-                        <span class="skill-tag">IBM Web Development Fundamentals</span>
-                        <span class="skill-tag">Linux Unhatched (Cisco)</span>
-                        <span class="skill-tag">Google Technical Support Fundamentals</span>
-                        <span class="skill-tag">Digital Health Essentials (MEDITECH SA)</span>
+                        <span class="skill-tag">Google IT Automation (Python) [cite: 54]</span>
+                        <span class="skill-tag">CompTIA Network+ (Infosec) [cite: 47]</span>
+                        <span class="skill-tag">Cisco Network Support & Security [cite: 48]</span>
+                        <span class="skill-tag">Generative AI Fundamentals (Databricks) [cite: 52]</span>
+                        <span class="skill-tag">IBM Web Development Fundamentals [cite: 51]</span>
+                        <span class="skill-tag">Linux Unhatched (Cisco) [cite: 48]</span>
+                        <span class="skill-tag">Google Technical Support Fundamentals [cite: 45]</span>
+                        <span class="skill-tag">Digital Health Essentials (MEDITECH SA) [cite: 46]</span>
                     </div>
                 </div>
             `,
@@ -479,20 +654,38 @@
                 <div class="cv-item">
                     <h3>Architectural Programming Stack</h3>
                     <div style="margin-top:0.4rem; margin-bottom:1rem;">
-                        <span class="skill-tag">Python</span><span class="skill-tag">C++</span>
-                        <span class="skill-tag">C</span><span class="skill-tag">JavaScript</span>
-                        <span class="skill-tag">Dart</span><span class="skill-tag">HTML5/CSS3</span>
+                        <span class="skill-tag">Python [cite: 13]</span><span class="skill-tag">C++ [cite: 13]</span>
+                        <span class="skill-tag">C [cite: 13]</span><span class="skill-tag">JavaScript [cite: 13]</span>
+                        <span class="skill-tag">Dart [cite: 13]</span><span class="skill-tag">HTML5/CSS3 [cite: 13]</span>
+                        <span class="skill-tag">Go Lang</span><span class="skill-tag">VB.NET</span>
+                        <span class="skill-tag">PHP</span>
                     </div>
                     <h3>Specialized Domains</h3>
                     <div style="margin-top:0.4rem;">
-                        <span class="skill-tag">Cisco Network Administration</span>
-                        <span class="skill-tag">IoT Ecosystem Hardware Mapping</span>
-                        <span class="skill-tag">Software Development Life Cycle (SDLC)</span>
-                        <span class="skill-tag">IT Support Essentials (Diagnostics)</span>
-                        <span class="skill-tag">Differentiated Pedagogical Instruction</span>
-                        <span class="skill-tag">Agricultural Systems Management</span>
+                        <span class="skill-tag">Cisco Network Administration [cite: 19]</span>
+                        <span class="skill-tag">IoT Ecosystem Hardware Mapping [cite: 12]</span>
+                        <span class="skill-tag">Software Development Life Cycle (SDLC) [cite: 14]</span>
+                        <span class="skill-tag">IT Support Essentials (Diagnostics) [cite: 11]</span>
+                        <span class="skill-tag">Differentiated Pedagogical Instruction [cite: 15]</span>
+                        <span class="skill-tag">Agricultural Systems Management [cite: 16]</span>
                     </div>
                 </div>
+            `,
+            contact: `
+                <div class="panel-section-title"><i class="fa-solid fa-satellite-dish"></i> Live Matrix Connection</div>
+                <form class="contact-form" onsubmit="executeLiveFormValidation(event)">
+                    <div class="form-group">
+                        <label for="form-email">Identity Verification (Email Address)</label>
+                        <input type="email" id="form-email" class="form-control" placeholder="name@domain.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="form-message">Data Payload (Message Content)</label>
+                        <textarea id="form-message" class="form-control" rows="4" placeholder="Input communication payload here..." required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">
+                        Transmit Packet <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </form>
             `
         };
 
@@ -503,16 +696,13 @@
         let raycaster, mouse;
 
         function init() {
-            // Scene & Space Aesthetics Setup
             scene = new THREE.Scene();
             scene.background = new THREE.Color(0x0a0b10);
             scene.fog = new THREE.FogExp2(0x0a0b10, 0.035);
 
-            // Optics Projection Setup
             camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.set(0, 6, 11);
+            camera.position.set(0, 7, 13);
 
-            // WebGL Output Optimization Setup
             renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -520,15 +710,13 @@
             renderer.shadowMap.type = THREE.PCFSoftShadowMap;
             container.appendChild(renderer.domElement);
 
-            // Navigation Matrix Setup (Supports multi-touch gestures on mobile models)
             controls = new OrbitControls(camera, renderer.domElement);
             controls.enableDamping = true;
             controls.dampingFactor = 0.05;
-            controls.maxPolarAngle = Math.PI / 2 - 0.05; // Lock camera path above floor plane boundary
+            controls.maxPolarAngle = Math.PI / 2 - 0.05; 
             controls.minDistance = 4;
-            controls.maxDistance = 22;
+            controls.maxDistance = 24;
 
-            // Environmental Lighting Arrays
             const ambientLight = new THREE.AmbientLight(0xffffff, 0.25);
             scene.add(ambientLight);
 
@@ -540,22 +728,18 @@
             dynamicDirLight.shadow.bias = -0.0005;
             scene.add(dynamicDirLight);
 
-            // Tech Cyber Glow Accent Point Light
             const accentLight = new THREE.PointLight(0x9b51e0, 2, 15);
             accentLight.position.set(-4, 3, -2);
             scene.add(accentLight);
 
-            // Render Structural Geometry Arrays
             compileWorldGeometry();
 
-            // Interactivity Binding Logic Pipelines (Mapped to cross-platform triggers)
             raycaster = new THREE.Raycaster();
             mouse = new THREE.Vector2();
 
             window.addEventListener('mousemove', handlePointerMovement);
             window.addEventListener('click', handleNodeSelection);
             
-            // Native mobile touch start listener fallback for fast interaction validation
             window.addEventListener('touchstart', (e) => {
                 if(e.touches.length > 0) {
                     updateMouseCoordinates(e.touches[0].clientX, e.touches[0].clientY);
@@ -573,12 +757,10 @@
         }
 
         function compileWorldGeometry() {
-            // Virtual Grid Floor Array
             const techGrid = new THREE.GridHelper(60, 60, 0x1a1c28, 0x141622);
             techGrid.position.y = -0.01;
             scene.add(techGrid);
 
-            // Shadow Base Plate Acceptor
             const planeGeo = new THREE.PlaneGeometry(70, 70);
             const planeMat = new THREE.MeshStandardMaterial({ color: 0x0a0b10, roughness: 0.85, metalness: 0.2 });
             const groundPlane = new THREE.Mesh(planeGeo, planeMat);
@@ -586,45 +768,53 @@
             groundPlane.receiveShadow = true;
             scene.add(groundPlane);
 
-            // Node 1: Core Base Hub (Center Node)
-            const hubGeo = new THREE.BoxGeometry(1.6, 1.6, 1.6);
+            // Node 1: Core Base Hub (Summary)
+            const hubGeo = new THREE.BoxGeometry(1.5, 1.5, 1.5);
             const hubMat = new THREE.MeshStandardMaterial({ color: 0x00f2fe, roughness: 0.2, metalness: 0.8 });
             const centralHub = new THREE.Mesh(hubGeo, hubMat);
-            centralHub.position.set(0, 1, 0);
-            centralHub.castShadow = true;
-            centralHub.name = "summary";
-            scene.add(centralHub);
-            raycastTrackedObjects.push(centralHub);
+            centralHub.position.set(0, 1.2, 0);
+            centralHub.castShadow = true; centralHub.name = "summary";
+            scene.add(centralHub); raycastTrackedObjects.push(centralHub);
 
-            // Node 2: Professional Operations Stack (Left Matrix Node)
+            // Node 2: Software Engineering Projects Node (Pyramid Geometry)
+            const projGeo = new THREE.ConeGeometry(0.8, 1.4, 4);
+            const projMat = new THREE.MeshStandardMaterial({ color: 0xffb703, roughness: 0.1, metalness: 0.6 });
+            const projNode = new THREE.Mesh(projGeo, projMat);
+            projNode.position.set(3, 2, 3);
+            projNode.castShadow = true; projNode.name = "projects";
+            scene.add(projNode); raycastTrackedObjects.push(projNode);
+
+            // Node 3: Experience Node
             const expGeo = new THREE.OctahedronGeometry(0.8, 0);
             const expMat = new THREE.MeshStandardMaterial({ color: 0x4facfe, roughness: 0.3, metalness: 0.7 });
             const expNode = new THREE.Mesh(expGeo, expMat);
             expNode.position.set(-4, 2, 2);
-            expNode.castShadow = true;
-            expNode.name = "experience";
-            scene.add(expNode);
-            raycastTrackedObjects.push(expNode);
+            expNode.castShadow = true; expNode.name = "experience";
+            scene.add(expNode); raycastTrackedObjects.push(expNode);
 
-            // Node 3: Academic Credentials Array (Right Matrix Node)
+            // Node 4: Education Node
             const eduGeo = new THREE.TorusGeometry(0.5, 0.2, 8, 24);
             const eduMat = new THREE.MeshStandardMaterial({ color: 0x9b51e0, roughness: 0.1, metalness: 0.9 });
             const eduNode = new THREE.Mesh(eduGeo, eduMat);
-            eduNode.position.set(4, 2.5, -1);
-            eduNode.castShadow = true;
-            eduNode.name = "education";
-            scene.add(eduNode);
-            raycastTrackedObjects.push(eduNode);
+            eduNode.position.set(4, 2.5, -2);
+            eduNode.castShadow = true; eduNode.name = "education";
+            scene.add(eduNode); raycastTrackedObjects.push(eduNode);
 
-            // Node 4: Technical Programming Skills Inventory (Rear Matrix Node)
+            // Node 5: Skills Node
             const skillGeo = new THREE.IcosahedronGeometry(0.7, 0);
             const skillMat = new THREE.MeshStandardMaterial({ color: 0x00ff87, roughness: 0.4, wireframe: true });
             const skillNode = new THREE.Mesh(skillGeo, skillMat);
-            skillNode.position.set(-1, 3, -4);
-            skillNode.castShadow = true;
-            skillNode.name = "skills";
-            scene.add(skillNode);
-            raycastTrackedObjects.push(skillNode);
+            skillNode.position.set(-2, 3, -4);
+            skillNode.castShadow = true; skillNode.name = "skills";
+            scene.add(skillNode); raycastTrackedObjects.push(skillNode);
+
+            // Node 6: Telemetry Contact Node (Knot/Sphere mesh structure)
+            const contactGeo = new THREE.SphereGeometry(0.6, 16, 16);
+            const contactMat = new THREE.MeshStandardMaterial({ color: 0xff5722, roughness: 0.2, metalness: 0.5 });
+            const contactNode = new THREE.Mesh(contactGeo, contactMat);
+            contactNode.position.set(1, 3.2, -5);
+            contactNode.castShadow = true; contactNode.name = "contact";
+            scene.add(contactNode); raycastTrackedObjects.push(contactNode);
         }
 
         function updateMouseCoordinates(clientX, clientY) {
@@ -634,11 +824,8 @@
 
         function handlePointerMovement(event) {
             updateMouseCoordinates(event.clientX, event.clientY);
-
             raycaster.setFromCamera(mouse, camera);
             const collisionMatches = raycaster.intersectObjects(raycastTrackedObjects);
-
-            // Transform cursor graphic dynamically on component interaction detection
             document.body.style.cursor = collisionMatches.length > 0 ? 'pointer' : 'default';
         }
 
@@ -648,23 +835,11 @@
 
             if (collisionMatches.length > 0) {
                 const targetNode = collisionMatches[0].object;
-                const hudTerminal = document.getElementById('dynamic-hud');
+                window.routeToSection(targetNode.name);
                 
-                // Parse targeted context array data records into HUD interface pipeline
-                const matchedDataKey = targetNode.name;
-                if (CV_DATA[matchedDataKey]) {
-                    hudTerminal.innerHTML = CV_DATA[matchedDataKey];
-                    
-                    // High-response emissive visual click acknowledgment trigger 
-                    const initialHexColor = targetNode.material.color.getHex();
-                    targetNode.material.color.setHex(0xffffff);
-                    setTimeout(() => { targetNode.material.color.setHex(initialHexColor); }, 150);
-                    
-                    // Smoothly auto-scrolls the HUD display open on smaller phone screens
-                    if(window.innerWidth <= 768) {
-                        hudTerminal.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                    }
-                }
+                const initialHexColor = targetNode.material.color.getHex();
+                targetNode.material.color.setHex(0xffffff);
+                setTimeout(() => { targetNode.material.color.setHex(initialHexColor); }, 150);
             }
         }
 
@@ -674,17 +849,17 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         }
 
-        // --- Core Animation Frame Routine Loop ---
         function executeRenderingCycle() {
             requestAnimationFrame(executeRenderingCycle);
-
             const absoluteTime = Date.now() * 0.0012;
 
-            // Apply distinct rotational/float matrix offsets across target mesh units
             raycastTrackedObjects.forEach((nodeInstance) => {
                 if (nodeInstance.name === "summary") {
                     nodeInstance.rotation.y += 0.005;
                     nodeInstance.rotation.x += 0.002;
+                } else if (nodeInstance.name === "projects") {
+                    nodeInstance.rotation.y += 0.01;
+                    nodeInstance.position.y += Math.sin(absoluteTime * 1.2) * 0.005;
                 } else if (nodeInstance.name === "experience") {
                     nodeInstance.rotation.y -= 0.008;
                     nodeInstance.position.y += Math.sin(absoluteTime + 1) * 0.004;
@@ -695,6 +870,9 @@
                 } else if (nodeInstance.name === "skills") {
                     nodeInstance.rotation.y += 0.01;
                     nodeInstance.position.y += Math.cos(absoluteTime * 1.5) * 0.006;
+                } else if (nodeInstance.name === "contact") {
+                    nodeInstance.rotation.x -= 0.005;
+                    nodeInstance.position.y += Math.sin(absoluteTime * 2) * 0.003;
                 }
             });
 
@@ -702,8 +880,56 @@
             renderer.render(scene, camera);
         }
 
-        // Initialize Technical Execution
+        // Initialize Engine Assembly
         init();
+    </script>
+
+    <script>
+        // Hamburger Menu Overlay Control Pipeline
+        const menuBtn = document.getElementById('menu-btn');
+        const menuLinks = document.getElementById('menu-links');
+
+        menuBtn.addEventListener('click', () => {
+            menuLinks.classList.toggle('active');
+        });
+
+        // Modular Route Router to stream layout injection calls
+        function routeToSection(sectionKey) {
+            const hudTerminal = document.getElementById('dynamic-hud');
+            if (window.CV_DATA && window.CV_DATA[sectionKey]) {
+                hudTerminal.innerHTML = window.CV_DATA[sectionKey];
+                
+                // Collapse mobile navigation drawer instantly upon choice registration
+                menuLinks.classList.remove('active');
+                
+                // Scroll layout into immediate viewpoint bounds on miniature screens
+                if(window.innerWidth <= 768) {
+                    hudTerminal.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+            }
+        }
+
+        // Validation System Handling Asynchronous Input Packets
+        function executeLiveFormValidation(event) {
+            event.preventDefault(); // Intercept browser fallback submission routines
+            
+            const emailInput = document.getElementById('form-email');
+            const messageInput = document.getElementById('form-message');
+
+            if (emailInput.value.trim() === '' || messageInput.value.trim() === '') {
+                alert("Critical Warning: All communication routing parameters must be populated.");
+                return;
+            }
+
+            alert("Transmission Confirmed:\nThank you, " + emailInput.value + ".\nYour data packet has been processed successfully!");
+            
+            // Format output link for local client hand-off processing matrices
+            window.location.href = "mailto:shigwedhamatheus13@gmail.com?subject=Portfolio%20Connection%20Request&body=" + encodeURIComponent(messageInput.value);
+            
+            // Re-zero parameters following transmission operations
+            emailInput.value = '';
+            messageInput.value = '';
+        }
     </script>
 </body>
 </html>
